@@ -2,34 +2,511 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Preguntas Frecuentes - InfoMaster</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro de Ayuda - InfoMaster</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; background: #f9f9f9; }
-    h1 { color: #333; }
-    .faq { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .question { font-weight: bold; margin-top: 20px; color: #2c3e50; }
-    .answer { margin-top: 5px; }
+    :root {
+      --primary-color: #0066ff;
+      --primary-light: #e6f0ff;
+      --primary-dark: #0052cc;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --background: #f8f9fa;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .header h1 {
+      color: var(--primary-color);
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    
+    .header p {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+    
+    .search-container {
+      position: relative;
+      margin-bottom: 30px;
+    }
+    
+    .search-box {
+      width: 100%;
+      padding: 15px 20px 15px 50px;
+      border: 2px solid #d1d5db;
+      border-radius: 50px;
+      font-size: 16px;
+      transition: var(--transition);
+      outline: none;
+    }
+    
+    .search-box:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+    }
+    
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    
+    .category-button {
+      padding: 8px 16px;
+      background-color: #e2e8f0;
+      border: none;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .category-button:hover {
+      background-color: #d1d5db;
+    }
+    
+    .category-button.active {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+    
+    .faq-list {
+      margin-bottom: 40px;
+    }
+    
+    .faq-item {
+      margin-bottom: 15px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      background-color: var(--white);
+    }
+    
+    .faq-question {
+      padding: 20px;
+      background-color: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .faq-question:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .faq-question h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .faq-toggle {
+      font-size: 24px;
+      font-weight: bold;
+      transition: var(--transition);
+    }
+    
+    .faq-answer {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: var(--transition);
+      background-color: var(--primary-light);
+    }
+    
+    .faq-answer-content {
+      padding: 0 20px 20px;
+    }
+    
+    .faq-item.active .faq-question {
+      background-color: #f5f7fa;
+    }
+    
+    .faq-item.active .faq-toggle {
+      transform: rotate(45deg);
+    }
+    
+    .faq-item.active .faq-answer {
+      max-height: 1000px;
+      padding: 20px;
+    }
+    
+    .contact-section {
+      text-align: center;
+      background-color: var(--primary-light);
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 40px;
+    }
+    
+    .contact-section h3 {
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+    
+    .contact-section p {
+      color: var(--text-dark);
+      margin-bottom: 20px;
+    }
+    
+    .whatsapp-button {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .whatsapp-button:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: var(--text-light);
+      font-size: 14px;
+    }
+    
+    .no-results {
+      text-align: center;
+      padding: 40px 0;
+    }
+    
+    .no-results p {
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    
+    .no-results button {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    
+    /* Animaciones */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease forwards;
+    }
+    
+    /* Estilos responsivos */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      .header h1 {
+        font-size: 28px;
+      }
+      
+      .category-filters {
+        gap: 8px;
+      }
+      
+      .category-button {
+        font-size: 13px;
+        padding: 6px 12px;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="faq">
-    <h1>Preguntas Frecuentes (FAQ)</h1>
-    <p><strong>Última actualización:</strong> abril 2025</p>
-
-    <div class="question">¿Qué servicios venden?</div>
-    <div class="answer">Ofrecemos cuentas de Netflix, Disney+, Max, Vix, Prime Video, Spotify, YouTube Premium, IPTV, Canva Pro y más.</div>
-
-    <div class="question">¿Las cuentas son compartidas o personales?</div>
-    <div class="answer">Depende del plan. Tenemos perfil único, cuentas compartidas y cuentas completas.</div>
-
-    <div class="question">¿Cuánto tardan en entregar?</div>
-    <div class="answer">De 1 a 10 minutos. Si hay retraso, puedes contactarnos por WhatsApp al 4961260597.</div>
-
-    <div class="question">¿Qué pasa si la cuenta falla?</div>
-    <div class="answer">Te reponemos la cuenta si aún tienes tiempo activo. También damos saldo a favor o cambios según el caso.</div>
-
-    <div class="question">¿Cómo pago?</div>
-    <div class="answer">Aceptamos transferencia, OXXO, PayPal, MercadoPago y recargas al wallet InfoMaster.</div>
+  <div class="container">
+    <div class="header">
+      <h1>Centro de Ayuda InfoMaster</h1>
+      <p>Encuentra respuestas rápidas a tus preguntas</p>
+    </div>
+    
+    <div class="search-container">
+      <input type="text" id="search-input" class="search-box" placeholder="Buscar en las preguntas frecuentes...">
+      <div class="search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="category-filters" id="category-filters">
+      <button class="category-button active" data-category="todas">Todas</button>
+      <button class="category-button" data-category="servicios">Servicios</button>
+      <button class="category-button" data-category="cuentas">Cuentas</button>
+      <button class="category-button" data-category="entrega">Entrega</button>
+      <button class="category-button" data-category="soporte">Soporte</button>
+      <button class="category-button" data-category="pagos">Pagos</button>
+    </div>
+    
+    <div class="faq-list" id="faq-list">
+      <!-- Las preguntas y respuestas se generarán dinámicamente con JavaScript -->
+    </div>
+    
+    <div class="no-results" id="no-results" style="display: none;">
+      <p>No se encontraron resultados para tu búsqueda.</p>
+      <button id="reset-search">Mostrar todas las preguntas</button>
+    </div>
+    
+    <div class="contact-section">
+      <h3>¿No encontraste lo que buscabas?</h3>
+      <p>Nuestro equipo de soporte está listo para ayudarte</p>
+      <a href="https://wa.me/4961260597" class="whatsapp-button" target="_blank">
+        Contactar por WhatsApp
+      </a>
+    </div>
+    
+    <div class="footer">
+      <p>Última actualización: abril 2025</p>
+    </div>
   </div>
+  
+  <script>
+    // Datos del FAQ
+    const faqData = [
+      {
+        id: 1,
+        category: 'servicios',
+        question: '¿Qué servicios venden?',
+        answer: 'Ofrecemos cuentas de Netflix, Disney+, Max, Vix, Prime Video, Spotify, YouTube Premium, IPTV, Canva Pro y más. Nuestros servicios se actualizan constantemente para incluir las plataformas más populares.'
+      },
+      {
+        id: 2,
+        category: 'cuentas',
+        question: '¿Las cuentas son compartidas o personales?',
+        answer: 'Depende del plan que elijas. Ofrecemos tres tipos de cuentas: perfil único (acceso exclusivo a un perfil dentro de una cuenta), cuentas compartidas (compartes la cuenta con otros usuarios) y cuentas completas (acceso total y exclusivo).'
+      },
+      {
+        id: 3,
+        category: 'entrega',
+        question: '¿Cuánto tardan en entregar?',
+        answer: 'Normalmente la entrega es entre 1 a 10 minutos después de confirmar el pago. Si experimentas algún retraso, puedes contactarnos por WhatsApp al 4961260597 para una atención inmediata.'
+      },
+      {
+        id: 4,
+        category: 'soporte',
+        question: '¿Qué pasa si la cuenta falla?',
+        answer: 'Te respaldamos completamente. Si tu cuenta presenta problemas mientras aún tienes tiempo activo, te proporcionamos un reemplazo sin costo adicional. Dependiendo del caso, también podemos ofrecer saldo a favor o cambios por otra plataforma similar.'
+      },
+      {
+        id: 5,
+        category: 'pagos',
+        question: '¿Cómo puedo pagar?',
+        answer: 'Tenemos múltiples opciones de pago: transferencia bancaria, pago en OXXO, PayPal, MercadoPago y también puedes hacer recargas a tu wallet de InfoMaster para tener saldo disponible para futuras compras.'
+      },
+      {
+        id: 6,
+        category: 'cuentas',
+        question: '¿Puedo usar la cuenta en varios dispositivos?',
+        answer: 'Sí, pero el número de dispositivos simultáneos depende del tipo de cuenta y servicio. Las cuentas completas permiten todos los dispositivos permitidos por la plataforma, mientras que los perfiles únicos suelen limitarse a 1-2 dispositivos a la vez.'
+      },
+      {
+        id: 7,
+        category: 'servicios',
+        question: '¿Ofrecen garantía con sus servicios?',
+        answer: 'Todos nuestros servicios incluyen garantía durante el período contratado. Si tienes algún problema, nuestro equipo de soporte está disponible para resolverlo rápidamente.'
+      },
+      {
+        id: 8,
+        category: 'soporte',
+        question: '¿Tienen soporte 24/7?',
+        answer: 'Nuestro equipo de soporte está disponible de 9:00 AM a 10:00 PM todos los días. Para casos urgentes fuera de este horario, contamos con un sistema de tickets que atendemos a primera hora del día siguiente.'
+      },
+      {
+        id: 9,
+        category: 'cuentas',
+        question: '¿Puedo cambiar la contraseña de mi cuenta?',
+        answer: 'En los planes de cuenta completa, sí puedes cambiar la contraseña. En los planes de perfiles compartidos o perfiles únicos, no se permite cambiar la contraseña para mantener el acceso a todos los usuarios.'
+      },
+      {
+        id: 10,
+        category: 'servicios',
+        question: '¿Qué calidad de video ofrecen las cuentas?',
+        answer: 'Todas nuestras cuentas tienen la máxima calidad disponible según el servicio (4K/UHD cuando está disponible). Solo en algunos planes económicos limitamos la calidad a HD.'
+      }
+    ];
+
+    // Variables globales
+    let activeCategory = 'todas';
+    let searchTerm = '';
+
+    // Referencias a elementos del DOM
+    const faqList = document.getElementById('faq-list');
+    const noResults = document.getElementById('no-results');
+    const searchInput = document.getElementById('search-input');
+    const resetSearchButton = document.getElementById('reset-search');
+    const categoryFilters = document.getElementById('category-filters');
+
+    // Función para renderizar las preguntas frecuentes
+    function renderFAQs() {
+      const filteredFAQs = faqData.filter(faq => {
+        const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                            faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = activeCategory === 'todas' || faq.category === activeCategory;
+        return matchesSearch && matchesCategory;
+      });
+
+      // Limpiar la lista actual
+      faqList.innerHTML = '';
+
+      // Mostrar mensaje de no resultados si es necesario
+      if (filteredFAQs.length === 0) {
+        noResults.style.display = 'block';
+        faqList.style.display = 'none';
+      } else {
+        noResults.style.display = 'none';
+        faqList.style.display = 'block';
+        
+        // Renderizar las preguntas filtradas
+        filteredFAQs.forEach(faq => {
+          const faqItem = document.createElement('div');
+          faqItem.className = 'faq-item fade-in';
+          faqItem.setAttribute('data-id', faq.id);
+          
+          faqItem.innerHTML = `
+            <div class="faq-question">
+              <h3>${faq.question}</h3>
+              <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+              <div class="faq-answer-content">${faq.answer}</div>
+            </div>
+          `;
+          
+          faqList.appendChild(faqItem);
+          
+          // Agregar evento de clic a la pregunta
+          const questionElement = faqItem.querySelector('.faq-question');
+          questionElement.addEventListener('click', () => {
+            toggleFAQ(faqItem);
+          });
+        });
+        
+        // Si hay una búsqueda, expandir la primera pregunta
+        if (searchTerm && filteredFAQs.length > 0) {
+          const firstItem = faqList.querySelector('.faq-item');
+          if (firstItem) {
+            toggleFAQ(firstItem, true);
+          }
+        }
+      }
+    }
+
+    // Función para expandir/contraer una pregunta
+    function toggleFAQ(faqItem, forceOpen = false) {
+      const isActive = faqItem.classList.contains('active');
+      
+      // Cerrar todas las preguntas activas
+      document.querySelectorAll('.faq-item.active').forEach(item => {
+        if (item !== faqItem) {
+          item.classList.remove('active');
+        }
+      });
+      
+      // Alternar el estado de la pregunta actual (a menos que forceOpen sea true)
+      if (!isActive || forceOpen) {
+        faqItem.classList.add('active');
+      } else if (!forceOpen) {
+        faqItem.classList.remove('active');
+      }
+    }
+
+    // Evento para la búsqueda
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value.trim();
+      renderFAQs();
+    });
+
+    // Evento para resetear la búsqueda
+    resetSearchButton.addEventListener('click', () => {
+      searchInput.value = '';
+      searchTerm = '';
+      activeCategory = 'todas';
+      
+      // Actualizar el estado visual de los botones de categoría
+      document.querySelectorAll('.category-button').forEach(button => {
+        button.classList.toggle('active', button.getAttribute('data-category') === 'todas');
+      });
+      
+      renderFAQs();
+    });
+
+    // Eventos para los filtros de categoría
+    categoryFilters.addEventListener('click', (e) => {
+      if (e.target.classList.contains('category-button')) {
+        const category = e.target.getAttribute('data-category');
+        
+        // Actualizar categoría activa
+        activeCategory = category;
+        
+        // Actualizar estado visual de los botones
+        document.querySelectorAll('.category-button').forEach(button => {
+          button.classList.toggle('active', button.getAttribute('data-category') === category);
+        });
+        
+        renderFAQs();
+      }
+    });
+
+    // Inicializar la lista de preguntas frecuentes
+    document.addEventListener('DOMContentLoaded', () => {
+      renderFAQs();
+    });
+  </script>
 </body>
 </html>
